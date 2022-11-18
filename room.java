@@ -81,4 +81,9 @@ public class room {
             return true;
         }
     }
+
+    public boolean isAdjacentTo(room adjacentRoom)
+    {
+        return adjacentRooms.contains(adjacentRoom);
+    }
 }
