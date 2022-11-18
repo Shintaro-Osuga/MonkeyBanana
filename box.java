@@ -1,13 +1,14 @@
-public class banana implements object{
+public class box implements object{
     private int[] location;
     private boolean height;
 
-    private String name = "banana";
+    private String name = "box";
 
-    public banana(boolean height)
+    public box()
     {
-        this.height = height;
+        height = false;
     }
+
     public void changeHeight()
     {
         height = !height;
