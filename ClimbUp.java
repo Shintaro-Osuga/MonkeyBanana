@@ -1,17 +1,15 @@
-public class Push {
-    private String operatorName = "PUSH";
-    private String pushFrom;
-    private String pushTo;
+public class ClimbUp {
+    private String operatorName = "ClimbUp";
+    private String from;
 
-    public Push(String from, String to)
+    public ClimbUp(String from)
     {
-        pushFrom = from;
-        pushTo = to;
+        this.from = from;
     }
 
     public boolean checkPreconditions(GameBoard board)
     {
-        if(!board.isMonkeyAt(pushFrom))
+        if(!board.isMonkeyAt(from))
         {
             return false;
         }
@@ -19,19 +17,18 @@ public class Push {
         {
             return false;
         }
-        if(!board.isBoxAt(pushFrom))
+        if(!board.isBoxAt(from))
         {
             return false;
         }
-        System.out.println("true-------");
         return true;
     }
 
     public GameBoard applyPostConditions(GameBoard board)
     {
         GameBoard post = board.copyBoard();
-        post.moveMonkey(pushTo);
-        post.moveBox(pushTo);
+        System.out.println("Monkey is high");
+        post.setMonkeyHeight("HIGH");
         return post;
     }
 }

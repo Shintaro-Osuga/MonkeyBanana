@@ -24,6 +24,7 @@ public class room {
         try
         {
             inRoom.remove(item);
+            itemNames.remove(item.getName());
         }
         catch (EmptyStackException e)
         {

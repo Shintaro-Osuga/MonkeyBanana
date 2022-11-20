@@ -28,13 +28,36 @@ public class GameBoard {
         itemNames = new ArrayList<String>();
         items = new ArrayList<object>();
         monkeyHasBananas = false;
+        monkeyHeight = "LOW";
         createRooms();
         createItems();
     }
 
+
     public GameBoard copyBoard()
     {
-        return this;
+        GameBoard copy = new GameBoard();
+
+        copy.setItemNames(itemNames);
+        copy.setMonkeyHeight(monkeyHeight);
+
+        copy.setRoomBananaIn(roomBananasIn);
+        copy.setRoomBoxIn(roomBoxIn);
+        copy.setRoomMonkeyIn(roomMonkeyIn);
+
+        copy.setRooms(rooms);
+        copy.setbananaIndex(bananaIndex);
+        copy.setboxIndex(boxIndex);
+
+        copy.setroomAIndex(roomAIndex);
+        copy.setroomBIndex(roomBIndex);
+        copy.setroomCIndex(roomCIndex);
+
+        copy.setmonkeyHasBananas(monkeyHasBananas);
+        copy.setmonkeyIndex(monkeyIndex);
+        copy.setItems(items);
+
+        return copy;
     }
     
     /* Creates and initializes rooms in the 2d array of rooms */
@@ -87,21 +110,22 @@ public class GameBoard {
                         roomCIndex = temp;
                         break;
                 }
-
-                //sets values for room monkey, banana, box in
-                if(rooms[x][y].getItems().contains(monkey.class))
-                {
-                    roomMonkeyIn = names.get(0);
-                    monkeyIndex = temp;
-                }else if(rooms[x][y].getItems().contains(banana.class))
-                {
-                    roomBananasIn = names.get(0);
-                    bananaIndex = temp;
-                }else if(rooms[x][y].getItems().contains(box.class))
-                {
-                    roomBoxIn = names.get(0);
-                    boxIndex = temp;
-                }
+                // System.out.println("room");
+                // //sets values for room monkey, banana, box in
+                // if(rooms[x][y].getItemNames().contains("monkey"))
+                // {
+                //     System.out.println("room monkey in");
+                //     roomMonkeyIn = names.get(0);
+                //     monkeyIndex = temp;
+                // }else if(rooms[x][y].getItemNames().contains("banana"))
+                // {
+                //     roomBananasIn = names.get(0);
+                //     bananaIndex = temp;
+                // }else if(rooms[x][y].getItemNames().contains("box"))
+                // {
+                //     roomBoxIn = names.get(0);
+                //     boxIndex = temp;
+                // }
 
                 names.remove(names.get(0));
             }
@@ -145,45 +169,113 @@ public class GameBoard {
      */
     public void placeItem(String roomName, String objectName)
     {
-        switch(objectName)
+        //goes through the list of names and if the roomName given is the same as name
+        //runs switch add item
+        for(int i = 0; i < 2; i++)
         {
-            case "monkey":
-                rooms[monkeyIndex[0]][monkeyIndex[1]].addItem(items.get(items.indexOf(monkey.class)));
-                break;
-            case "banana":
-                rooms[bananaIndex[0]][bananaIndex[1]].addItem(items.get(items.indexOf(banana.class)));
-                break;
-            case "box":
-                rooms[boxIndex[0]][boxIndex[1]].addItem(items.get(items.indexOf(box.class)));
-                break;
+            for(int j = 0; j < 2; j++)
+            {
+                for(int k = 0; k < items.size(); k++)
+                {
+                    if(items.get(k).getName().equals(objectName) && rooms[i][j].getRoomName().equals(roomName))
+                    {
+                        rooms[i][j].addItem(items.get(k));
+                        switch(objectName)
+                        {
+                            case "monkey":
+                                roomMonkeyIn = rooms[i][j].getRoomName();
+                                monkeyIndex = new int[]{i,j};
+                                break;
+                            case "banana":
+                                roomBananasIn = rooms[i][j].getRoomName();
+                                bananaIndex = new int[]{i,j};
+                                break;
+                            case "box":
+                                System.out.println("Setting box location to");
+                                roomBoxIn = rooms[i][j].getRoomName();
+                                boxIndex = new int[]{i,j};
+                                break;
+                            }
+                    }
+                }
+            }
         }
     }
-    
+
+    //Removes monkey from previous location, changes monkeyIndex to new index, and adds monkey to the new room
     public void moveMonkey(String to)
     {
         switch(to)
         {
             case "A":
-                rooms[monkeyIndex[0]][monkeyIndex[1]].removeItem(items.get(items.indexOf(monkey.class)));
+                rooms[monkeyIndex[0]][monkeyIndex[1]].removeItem(items.get(0));
+
+                roomMonkeyIn = "A";
                 monkeyIndex = roomAIndex;
 
-                rooms[roomAIndex[0]][roomAIndex[1]].addItem(items.get(items.indexOf(monkey.class)));
+                rooms[roomAIndex[0]][roomAIndex[1]].addItem(items.get(0));
+                break;
             case "B":
-                rooms[monkeyIndex[0]][monkeyIndex[1]].removeItem(items.get(items.indexOf(monkey.class)));
+                rooms[monkeyIndex[0]][monkeyIndex[1]].removeItem(items.get(0));
+
+                roomMonkeyIn = "B";
                 monkeyIndex = roomBIndex;
-                
-                rooms[roomBIndex[0]][roomBIndex[1]].addItem(items.get(items.indexOf(monkey.class)));
+
+                rooms[roomBIndex[0]][roomBIndex[1]].addItem(items.get(0));
+                break;
             case "C":
-                rooms[monkeyIndex[0]][monkeyIndex[1]].removeItem(items.get(items.indexOf(monkey.class)));
+                rooms[monkeyIndex[0]][monkeyIndex[1]].removeItem(items.get(0));
+
+                roomMonkeyIn = "C";
                 monkeyIndex = roomCIndex;
 
-                rooms[roomCIndex[0]][roomCIndex[1]].addItem(items.get(items.indexOf(monkey.class)));
+                rooms[roomCIndex[0]][roomCIndex[1]].addItem(items.get(0));
+                break;
+            default:
+                System.out.println("In switch");
+                break;
         }
+    }
+
+    public void moveBox(String to)
+    {
+        switch(to)
+        {
+            case "A":
+                rooms[boxIndex[0]][boxIndex[1]].removeItem(items.get(2));
+
+                roomBoxIn = "A";
+                boxIndex = roomAIndex;
+
+                rooms[roomAIndex[0]][roomAIndex[1]].addItem(items.get(2));
+                break;
+            case "B":
+                rooms[boxIndex[0]][boxIndex[1]].removeItem(items.get(2));
+
+                roomBoxIn = "B";
+                boxIndex = roomBIndex;
+                
+                rooms[roomBIndex[0]][roomBIndex[1]].addItem(items.get(2));
+                break;
+            case "C":
+                rooms[boxIndex[0]][boxIndex[1]].removeItem(items.get(2));
+
+                roomBoxIn = "C";
+                boxIndex = roomCIndex;
+
+                rooms[roomCIndex[0]][roomCIndex[1]].addItem(items.get(2));
+                break;
+        }
+    }
+
+    public boolean monkeyHasBananas()
+    {
+        return monkeyHasBananas;
     }
 
     public void updateMonkeyHeight(String height)
     {
-        items.get(items.indexOf(monkey.class)).changeHeight();
+        items.get(0).changeHeight();
         monkeyHeight = height;
     }
 
@@ -195,6 +287,11 @@ public class GameBoard {
     public List<String> getItemNameList()
     {
         return itemNames;
+    }
+
+    public List<object> getItems()
+    {
+        return items;
     }
 
     public String getRoomNameMonkeyIn()
@@ -214,7 +311,7 @@ public class GameBoard {
 
     public room getRoomMonkeyIn()
     {
-        return 
+        return rooms[monkeyIndex[0]][monkeyIndex[1]];
     }
 
     public boolean isMonkeyAt(String roomName)
@@ -239,17 +336,80 @@ public class GameBoard {
 
     public object getMonkey()
     {
-        return items.get(items.indexOf(monkey.class));
+        return items.get(0);
     }
 
     public object getBox()
     {
-        return items.get(items.indexOf(box.class));
+        return items.get(2);
     }
 
     public object getBanana()
     {
-        return items.get(items.indexOf(banana.class));
+        return items.get(items.indexOf(1));
+    }
+
+    public void setRooms(room[][] room)
+    {
+        rooms = room;
+    }
+
+    public void setItemNames(List<String> itemNames)
+    {
+        this.itemNames = itemNames;
+    }
+
+    public void setRoomMonkeyIn(String roomMonkeyIn)
+    {
+        this.roomMonkeyIn = roomMonkeyIn;
+    }
+
+    public void setRoomBoxIn(String roomBoxIn)
+    {
+        this.roomBoxIn = roomBoxIn;
+    }
+    
+    public void setRoomBananaIn(String roomBananaIn)
+    {
+        this.roomBananasIn = roomBananaIn;
+    }
+    
+    public void setMonkeyHeight(String height)
+    {
+        this.monkeyHeight = height;
+    }    
+    
+    public void setmonkeyHasBananas(boolean monkeyHasBananas){
+        this.monkeyHasBananas = monkeyHasBananas;
+    }
+    
+    public void setmonkeyIndex(int[] monkeyIndex){
+        this.monkeyIndex = monkeyIndex;
+    }
+
+    public void setboxIndex(int[] boxIndex){
+        this.boxIndex = boxIndex;
+    }
+
+    public void setbananaIndex(int[] bananaIndex){
+        this.bananaIndex = bananaIndex;
+    }
+    
+    public void setroomAIndex(int[] roomAIndex){
+        this.roomAIndex = roomAIndex;
+    }
+    
+    public void setroomBIndex(int[] roomBIndex){
+        this.roomBIndex = roomBIndex;
+    }
+
+    public void setroomCIndex(int[] roomCIndex){
+        this.roomCIndex = roomCIndex;
+    }
+
+    public void setItems(List<object> items)
+    {
+        this.items = items;
     }
 
 
@@ -258,6 +418,21 @@ public class GameBoard {
 
 
 
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /* might implement this later so the user doesnt need to specify monkey, banana, box locations */
     private void RandomplaceItems()
