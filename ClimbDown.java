@@ -1,4 +1,4 @@
-public class ClimbDown {
+public class ClimbDown implements Action{
     private String operatorName = "ClimbDown";
     private String from;
 
@@ -24,7 +24,7 @@ public class ClimbDown {
         return true;
     }
 
-    public GameBoard applyPostConditions(GameBoard board)
+    public GameBoard applyPostconditions(GameBoard board)
     {
         GameBoard post = board.copyBoard();
         post.setMonkeyHeight("LOW");

@@ -5,17 +5,31 @@ public class Main{
         GameBoard gameboard = new GameBoard();
         boardPrinter printer = new boardPrinter();
         UI ui = new UI();
-
+        MeanEndAnalysis MEA = new MeanEndAnalysis(gameboard);
+        
         printer.printBoard(gameboard.getRooms());
-        // printRoom(gameboard.getRooms());
-        setItemLocations(gameboard, printer, ui);
-        while(gameboard.monkeyHasBananas()==false)
-        {
-            gameboard = makeMove(gameboard, printer, ui);
-            printer.printBoard(gameboard.getRooms());
-        }
-        // printRoom(gameboard.getRooms());
 
+        setItemLocations(gameboard, printer, ui);
+        
+        gameboard = MEA.MeanEndAnalysis();
+        printer.printBoard(gameboard.getRooms());
+        MEA.printActions();
+
+        //for user playing the game
+        // while(gameboard.monkeyHasBananas()==false)
+        // {
+        //     gameboard = makeMove(gameboard, printer, ui);
+        //     printer.printBoard(gameboard.getRooms());
+        // }
+        // printRoom(gameboard.getRooms());
+    }
+
+    public static void output()
+    {
+        ArrayList<Class<? extends Action>> actions = new ArrayList<Class<? extends Action>>();
+
+        actions.add(Grab.class);
+        System.out.println(Arrays.deepToString(actions.get(0).getConstructors()));
     }
 
     public static GameBoard makeMove(GameBoard gameBoard, boardPrinter printer, UI ui)
@@ -40,7 +54,7 @@ public class Main{
             Push push = new Push(params[0], params[1]);
             if(push.checkPreconditions(gameBoard))
             {
-                gameBoard = push.applyPostConditions(gameBoard);
+                gameBoard = push.applyPostconditions(gameBoard);
             }
         }else if(input.equals("ClimbUp"))
         {
@@ -48,7 +62,7 @@ public class Main{
             ClimbUp climbUp = new ClimbUp(param);
             if(climbUp.checkPreconditions(gameBoard))
             {
-                gameBoard = climbUp.applyPostConditions(gameBoard);
+                gameBoard = climbUp.applyPostconditions(gameBoard);
             }
         }else if(input.equals("ClimbDown"))
         {
@@ -56,7 +70,7 @@ public class Main{
             ClimbDown climbDown = new ClimbDown(param);
             if(climbDown.checkPreconditions(gameBoard))
             {
-                gameBoard = climbDown.applyPostConditions(gameBoard);
+                gameBoard = climbDown.applyPostconditions(gameBoard);
             }
         }else if(input.equals("Grab"))
         {
@@ -64,7 +78,7 @@ public class Main{
             Grab grab = new Grab(param);
             if(grab.checkPreconditions(gameBoard))
             {
-                gameBoard = grab.applyPostConditions(gameBoard);
+                gameBoard = grab.applyPostconditions(gameBoard);
             }
         }
         return gameBoard;
@@ -76,7 +90,6 @@ public class Main{
 
         for(int i = 0; i < gameboard.getItemNameList().size(); i++)
         {
-            // System.out.print(ui.verifyInput(null, roomNames));
             String input = null;
             while(ui.verifyInput(input, roomNames) == false)
             {
@@ -87,28 +100,5 @@ public class Main{
         }
         printer.printBoard(gameboard.getRooms());
         return gameboard;
-    }
-
-    /* these are helper methods for when i had the monkey in every room bug
-     * i kept them for now but they will sadly be getting game ended sooner or later
-     */
-    public static void printRoom(room[][] room)
-    {
-        for(int i =0; i<2; i++)
-        {
-            for(int j = 0; j < 2; j++)
-            {
-                System.out.print(room[i][j].getRoomName());
-                printItemNames(room[i][j].getItemNames());
-            }
-        }
-    }
-    public static void printItemNames(List<String> itemNames)
-    {
-        for(int i = 0; i < itemNames.size(); i++)
-        {
-            System.out.println(itemNames.get(i));
-        }
-
     }
 }

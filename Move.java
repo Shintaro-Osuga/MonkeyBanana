@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Move {
+public class Move implements Action{
     private String operatoreName = "MOVE";
     private String moveFrom;
     private String moveTo;
@@ -13,9 +13,6 @@ public class Move {
 
     public boolean checkPreconditions(GameBoard board)
     {
-        System.out.println("In pre");
-        
-        System.out.println(board.getRoomNameMonkeyIn());
         if(!board.isMonkeyAt(moveFrom))
         {
             return false;
@@ -34,7 +31,6 @@ public class Move {
         GameBoard postBoard = board.copyBoard();
         postBoard.moveMonkey(moveTo);
         
-        System.out.println("in apply");
         return postBoard;
     }
 }

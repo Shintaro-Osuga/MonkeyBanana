@@ -1,4 +1,4 @@
-public class ClimbUp {
+public class ClimbUp implements Action{
     private String operatorName = "ClimbUp";
     private String from;
 
@@ -24,10 +24,9 @@ public class ClimbUp {
         return true;
     }
 
-    public GameBoard applyPostConditions(GameBoard board)
+    public GameBoard applyPostconditions(GameBoard board)
     {
         GameBoard post = board.copyBoard();
-        System.out.println("Monkey is high");
         post.setMonkeyHeight("HIGH");
         return post;
     }

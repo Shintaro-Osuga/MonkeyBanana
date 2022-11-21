@@ -110,22 +110,6 @@ public class GameBoard {
                         roomCIndex = temp;
                         break;
                 }
-                // System.out.println("room");
-                // //sets values for room monkey, banana, box in
-                // if(rooms[x][y].getItemNames().contains("monkey"))
-                // {
-                //     System.out.println("room monkey in");
-                //     roomMonkeyIn = names.get(0);
-                //     monkeyIndex = temp;
-                // }else if(rooms[x][y].getItemNames().contains("banana"))
-                // {
-                //     roomBananasIn = names.get(0);
-                //     bananaIndex = temp;
-                // }else if(rooms[x][y].getItemNames().contains("box"))
-                // {
-                //     roomBoxIn = names.get(0);
-                //     boxIndex = temp;
-                // }
 
                 names.remove(names.get(0));
             }
@@ -410,51 +394,6 @@ public class GameBoard {
     public void setItems(List<object> items)
     {
         this.items = items;
-    }
-
-
-
-
-
-
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    /* might implement this later so the user doesnt need to specify monkey, banana, box locations */
-    private void RandomplaceItems()
-    {
-        int num_added = 0;
-
-        for(int i = 0; i < 2; i++)
-        {
-            for(int j = 0; j < 2; j++)
-            {
-                for(int k = 0; k < items.size(); k++)
-                {
-                    if((Math.random()*((16-0)+0)) % (4 - num_added) == 0 || num_added == items.size())
-                    {
-                        int[] temploc = new int[]{i,j};
-                        items.get(k).changeLocation(temploc);
-                        rooms[i][j].addItem(items.get(k));
-                        num_added++;
-                    }
-                }
-            }
-        }
     }
 
 }

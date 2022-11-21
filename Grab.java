@@ -1,4 +1,4 @@
-public class Grab {
+public class Grab implements Action{
     private String operatorName = "Grab";
     private String from;
 
@@ -24,10 +24,9 @@ public class Grab {
         return true;
     }
 
-    public GameBoard applyPostConditions(GameBoard board)
+    public GameBoard applyPostconditions(GameBoard board)
     {
         GameBoard post = board.copyBoard();
-        System.out.println("Monkey Grab");
         post.setmonkeyHasBananas(true);
         return post;
     }

@@ -1,4 +1,4 @@
-public class Push {
+public class Push implements Action{
     private String operatorName = "PUSH";
     private String pushFrom;
     private String pushTo;
@@ -23,11 +23,10 @@ public class Push {
         {
             return false;
         }
-        System.out.println("true-------");
         return true;
     }
 
-    public GameBoard applyPostConditions(GameBoard board)
+    public GameBoard applyPostconditions(GameBoard board)
     {
         GameBoard post = board.copyBoard();
         post.moveMonkey(pushTo);
